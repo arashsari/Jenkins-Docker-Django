@@ -2,6 +2,19 @@
 
 
 ## Instruction to run
+
+docker-compose -f .\docker-compose.ci.yml up
+
+
+
+
+
+
+
+
+
+
+
 1- run `ssh-keygen -t rsa -f jenkins_agent` and replace public key in docker-compose agent. 
 
 
