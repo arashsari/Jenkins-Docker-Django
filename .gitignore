@@ -1,3 +1,6 @@
+jenkins_agent
+jenkins_agent.pub
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
