@@ -1,7 +1,7 @@
-library identifier: 'jenkins-shared@main', retriever: modernSCM(
- [$class: 'GitSCMSource',
-  remote: 'https://github.com/arashsari/Jenkins-Docker-Django.git',
- ])
+// library identifier: 'jenkins-shared@main', retriever: modernSCM(
+//  [$class: 'GitSCMSource',
+//   remote: 'https://github.com/arashsari/Jenkins-Docker-Django.git',
+//  ])
 
 pipeline {
  environment {
