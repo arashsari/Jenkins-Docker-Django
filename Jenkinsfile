@@ -13,13 +13,8 @@ pipeline {
     projectPath = "/jenkins/data/workspace/django-server"
   }
   parameters {
-    gitParameter name: 'TAG', branchFilter: 'origin/(.*)', defaultValue: '0.0.1', type: 'TAG'
+    gitParameter name: 'TAG', defaultValue: '0.0.1', type: 'PT_TAG'
     // gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
-  }
-  parameters {
-    gitParameter name: 'TAG',
-    type: 'PT_TAG',
-    defaultValue: 'main'
   }
 
  stages {
