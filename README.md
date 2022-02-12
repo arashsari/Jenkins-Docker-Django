@@ -40,3 +40,11 @@ Hit "http://127.0.0.1:8080/" in browser
 --- Timeout : 60, retries: 10 and Wait : 15
 
 
+
+
+Check log : `docker-compose logs -f`
+
+`docker-compose up -d --build`
+`docker-compose exec app python manage.py migrate --noinput`
+
+`docker-compose exec db psql --username=postgres --dbname=postgres`

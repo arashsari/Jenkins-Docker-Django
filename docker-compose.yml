@@ -15,7 +15,6 @@ services:
       build: ./app
       restart: always
       command: python manage.py runserver 0.0.0.0:8000
-      # command: python /var/jenkins_home/workspace/demo/app/manage.py runserver 0.0.0.0:8000
       ports:
         - "8002:8000"
       volumes:
@@ -23,10 +22,6 @@ services:
         - jenkins_data:/var/jenkins_home
       env_file:
         - ../.env.dev
-      environment:
-        - POSTGRES_NAME=postgres
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=password123
       depends_on:
         - db
 
@@ -35,8 +30,6 @@ services:
       restart: always
       privileged: true
       user: root
-      # environment:
-      #   JAVA_OPTS: "-Djava.awt.headless=true -Xmx512m -Xms512m -Djava.util.logging.config.file=/var/jenkins_home/log.properties"
       ports:
           - "8080:8080"
           - "50002:50000"
