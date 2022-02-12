@@ -13,11 +13,11 @@ pipeline {
 
  agent any
 
- parameters {
-  gitParameter name: 'RELEASE_TAG',
-   type: 'PT_TAG',
-   defaultValue: 'main'
- }
+//  parameters {
+//   gitParameter name: 'RELEASE_TAG',
+//    type: 'PT_TAG',
+//    defaultValue: 'main'
+//  }
 
  stages {
 
