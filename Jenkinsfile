@@ -1,4 +1,4 @@
-library identifier: 'jenkins-shared@master', retriever: modernSCM(
+library identifier: 'jenkins-shared@main', retriever: modernSCM(
  [$class: 'GitSCMSource',
   remote: 'https://github.com/arashsari/Jenkins-Docker-Django.git',
  ])
@@ -30,7 +30,7 @@ pipeline {
   stage('Build Image') {
    steps {
     script {
-     if (isMaster()) {
+     if (isMain()) {
       dockerImage = docker.build "$registry:latest"
      } else {
       dockerImage = docker.build "$registry:${params.RELEASE_TAG}"
@@ -73,6 +73,6 @@ def getBuildName() {
  "${BUILD_NUMBER}_$appName:${params.RELEASE_TAG}"
 }
 
-def isMaster() {
+def isMain() {
  "${params.RELEASE_TAG}" == "main"
 }
