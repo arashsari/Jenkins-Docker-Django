@@ -6,9 +6,9 @@ ansiColor('xterm') {
             // Get some code from a GitHub repository
             checkout scm
         }
-        // stage('Setup') {
-        //     sh "ansible-galaxy install -r requirements.yml"
-        // }
+        stage('Setup') {
+            sh "echo hello"
+        }
         // stage('Validate') {
         //     sh "packer validate ubuntu.json"
         // }
@@ -18,9 +18,9 @@ ansiColor('xterm') {
         //     sh "packer build -var 'aws_region=us-west-2' ubuntu.json"
         //     }
         // }
-        stage('Store Artifacts') {
-            archiveArtifacts 'manifest.json'
-        }
+        // stage('Store Artifacts') {
+        //     archiveArtifacts 'manifest.json'
+        // }
     }
 }
 
