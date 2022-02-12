@@ -56,7 +56,7 @@ pipeline {
 //     sh "docker rmi $registry:${params.RELEASE_TAG}"
 //    }
 //   }
-//  }
+ }
 
  post {
   failure {
