@@ -48,3 +48,7 @@ Check log : `docker-compose logs -f`
 `docker-compose exec app python manage.py migrate --noinput`
 
 `docker-compose exec db psql --username=postgres --dbname=postgres`
+
+
+
+------ Auth with Githib

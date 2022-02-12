@@ -1,3 +1,50 @@
+# version: '3.9'
+
+# services:
+#   jenkins:
+#       build: .
+#       user: root
+#       volumes:
+#         - jenkins_data:/var/jenkins_home
+#         - jenkins_artifacts:/var/jenkins_artifacts
+#         - /var/run/docker.sock:/var/run/docker.sock 
+#       networks:
+#         - jenkins_networks
+#       deploy:
+#         replicas: 1
+#         restart_policy:
+#           condition: on-failure
+#   jenkins_build_agent:
+#       image: jenkins/ssh-agent:jdk11
+#       privileged: true
+#       user: root
+#       expose:
+#         - 22
+#       environment:
+#         - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCboKS3eW6IgVw1AiaOOdf5yvtZyact7uwjrDhAocVpAvculX1V+jDLSBoZQG3Em420erjEwCLYN5BaMYK7hqGKmRLWwBeqxMA4C90FgFKPKIm8Re+TYpZ/NgM5YV0Ou/bChrHVBd3z5EYKdjaYHeqFxFthe6vSkMPkLikdDbT+6OMS1GVKMewQGeVsSb6agZYgn4n693JKJCxkfYL/Bv1une13tN7yzQ8jEwzf7JoDeZwwBxmrVz1Tp9IqI6EDiV2ezGpgI4guBttMC3cHlog93aXaqY2z8gXm/oHHMuU5HRc1q2EzZgWqHG3RT57Yu/4jMcc5YoCRuxipZA1w4x1irgB2nGHjLSAefKQ9uWXJKoUmpLnhyq7in1AO2sIajfS3zvaABVHpIb5Zkx/Z3gYGlUEEsoLbHMWMrOxuv7piz7LqglXT6tg4XesSN9jKz4OqJIDo4AWK9f03hEwqTZOw6kJW7BPcNwuQDsHqI/5uIHU0SpImua+MwTZHzU84JCE= arash@mehdis-MBP
+#       volumes:
+#           - jenkins_data:/var/jenkins_home
+#           - /var/run/docker.sock:/var/run/docker.sock 
+#       depends_on: 
+#           - jenkins
+#   db:
+#       image: postgres
+#       environment:
+#         - POSTGRES_NAME=postgres
+#         - POSTGRES_USER=postgres
+#         - POSTGRES_PASSWORD=password123
+#       ports:
+#         - "5434:5432"
+#       volumes:
+#         - pgdata_jenkins:/var/lib/postgresql/data/
+# networks:
+#   jenkins_networks:
+
+# volumes:
+#     jenkins_data:
+#     jenkins_artifacts:
+#     pgdata_jenkins:
+
 version: '3.9'
 services:
     db:
@@ -11,19 +58,19 @@ services:
       volumes:
         - pgdata_jenkins:/var/lib/postgresql/data/
 
-    app:
-      build: ./app
-      restart: always
-      command: python manage.py runserver 0.0.0.0:8000
-      ports:
-        - "8002:8000"
-      volumes:
-        - app_data:/docker_app
-        - jenkins_data:/var/jenkins_home
-      env_file:
-        - ./.env.dev
-      depends_on:
-        - db
+    # app:
+    #   build: ./app
+    #   restart: always
+    #   command: python manage.py runserver 0.0.0.0:8000
+    #   ports:
+    #     - "8002:8000"
+    #   volumes:
+    #     - app_data:/docker_app
+    #     - jenkins_data:/var/jenkins_home
+    #   env_file:
+    #     - ./.env.dev
+    #   depends_on:
+    #     - db
 
     jenkins:
       image: jenkins/jenkins:lts-jdk11
@@ -35,7 +82,8 @@ services:
           - "50002:50000"
       volumes:
           - jenkins_data:/var/jenkins_home
-    agent:
+          - /var/run/docker.sock:/var/run/docker.sock 
+    jenkins_build_agent:
       image: jenkins/ssh-agent:jdk11
       privileged: true
       user: root
@@ -43,6 +91,11 @@ services:
         - 22
       environment:
         - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCboKS3eW6IgVw1AiaOOdf5yvtZyact7uwjrDhAocVpAvculX1V+jDLSBoZQG3Em420erjEwCLYN5BaMYK7hqGKmRLWwBeqxMA4C90FgFKPKIm8Re+TYpZ/NgM5YV0Ou/bChrHVBd3z5EYKdjaYHeqFxFthe6vSkMPkLikdDbT+6OMS1GVKMewQGeVsSb6agZYgn4n693JKJCxkfYL/Bv1une13tN7yzQ8jEwzf7JoDeZwwBxmrVz1Tp9IqI6EDiV2ezGpgI4guBttMC3cHlog93aXaqY2z8gXm/oHHMuU5HRc1q2EzZgWqHG3RT57Yu/4jMcc5YoCRuxipZA1w4x1irgB2nGHjLSAefKQ9uWXJKoUmpLnhyq7in1AO2sIajfS3zvaABVHpIb5Zkx/Z3gYGlUEEsoLbHMWMrOxuv7piz7LqglXT6tg4XesSN9jKz4OqJIDo4AWK9f03hEwqTZOw6kJW7BPcNwuQDsHqI/5uIHU0SpImua+MwTZHzU84JCE= arash@mehdis-MBP
+      volumes:
+          - jenkins_data:/var/jenkins_home
+          - /var/run/docker.sock:/var/run/docker.sock 
+      depends_on: 
+          - jenkins
 volumes:
     app_data:
     jenkins_data:

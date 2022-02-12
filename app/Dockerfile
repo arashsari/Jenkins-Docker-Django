@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.4
 LABEL maintainer ArashSar
 
 # set environment variables
@@ -9,11 +9,11 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /docker_app/app
 
 # install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    postgresql-client \
     libpq-dev \
     gcc \
-    gettext \
-    musl-dev
+    && rm -rf /var/lib/apt/lists/*
 
 # # install psycopg2 dependencies
 # RUN apk update \
@@ -44,8 +44,10 @@ COPY . .
 
 # WORKDIR /app
 
-# EXPOSE 80/tcp 443/tcp
 
+# EXPOSE 80/tcp 443/tcp
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 # ENTRYPOINT ["/entrypoint"]
 
 # CMD ["sh" , "/start-django"]
