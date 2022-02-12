@@ -73,7 +73,8 @@ services:
     #     - db
 
     jenkins:
-      image: jenkins/jenkins:lts-jdk11
+      # image: jenkins/jenkins:lts-jdk11
+      build: .
       restart: always
       privileged: true
       user: root
@@ -84,7 +85,8 @@ services:
           - jenkins_data:/var/jenkins_home
           - /var/run/docker.sock:/var/run/docker.sock 
     jenkins_build_agent:
-      image: jenkins/ssh-agent:jdk11
+      # image: jenkins/ssh-agent:jdk11
+      build: .
       privileged: true
       user: root
       expose:
