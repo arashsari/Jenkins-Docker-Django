@@ -74,5 +74,6 @@ def getBuildName() {
 }
 
 def isMain() {
- "${params.RELEASE_TAG}" == "main"
+ "main" == "main"
+//  "${params.RELEASE_TAG}" == "main"
 }
