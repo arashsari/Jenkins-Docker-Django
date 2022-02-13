@@ -21,6 +21,7 @@ RUN apt-get update && apt-get -y install docker
 RUN apt-get update && apt-get install -y openjdk-8-jre curl python python-pip git
 # RUN pip install jenkins-webapi requests jenkinsapi jenkins
 # RUN easy_install jenkins-webapi
+RUN pip install jenkins-webapi 
 
 # Get docker-compose in the agent container
 
@@ -43,7 +44,6 @@ ENV SLAVE_LABELS "docker"
 ENV SLAVE_WORING_DIR ""
 ENV CLEAN_WORKING_DIR "true"
 
-RUN pip install -u jenkins-webapi 
 
 CMD [ "python", "-u", "/var/lib/jenkins/slave.py" ]
 

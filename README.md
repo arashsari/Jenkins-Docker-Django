@@ -1,5 +1,7 @@
 # Jenkins-Docker-Django
+09121777151
 
+jaber
 
 ## Instruction to run
 
@@ -12,6 +14,8 @@ docker build -t jenkins-build-agent .
 docker-compose -f docker-compose.jenkins.yml up
 
 d3557ef98b324a5eba01283147d3eb32
+
+ab153cb3895247109a50dbe1f21def1e
 
 
 
