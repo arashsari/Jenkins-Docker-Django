@@ -3,9 +3,15 @@
 
 ## Instruction to run
 
-docker-compose -f .\docker-compose.ci.yml up
+cd jenkins/master/
+docker build -t jenkins-master .
 
+cd jenkins/build-agent/
+docker build -t jenkins-build-agent .
 
+docker-compose -f docker-compose.jenkins.yml up
+
+d3557ef98b324a5eba01283147d3eb32
 
 
 

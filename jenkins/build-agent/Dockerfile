@@ -1,14 +1,26 @@
    
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Install Docker CLI
-RUN apt-get update && apt-get install -y apt-transport-https ca-certificates
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-RUN echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" > /etc/apt/sources.list.d/docker.list
-RUN apt-get update && apt-get install -y docker-ce --allow-unauthenticated
+RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+RUN apt-get remove docker docker-engine docker.io containerd runc 
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN apt-get update && apt-get -y install docker
+# RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+# RUN echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" > /etc/apt/sources.list.d/docker.list
+# RUN apt-get update && apt-get install -y docker-ce --allow-unauthenticated
+
+# RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+# # RUN add-apt-repository \
+# #    "deb [arch=amd64] https://download.docker.com/linux/ubuntu; echo "$ID") \
+# #    $(lsb_release -cs) \
+# #    stable"  
+# RUN apt-get install -y docker-ce --allow-unauthenticated
 
 RUN apt-get update && apt-get install -y openjdk-8-jre curl python python-pip git
-RUN easy_install jenkins-webapi
+# RUN pip install jenkins-webapi requests jenkinsapi jenkins
+# RUN easy_install jenkins-webapi
 
 # Get docker-compose in the agent container
 
@@ -31,4 +43,7 @@ ENV SLAVE_LABELS "docker"
 ENV SLAVE_WORING_DIR ""
 ENV CLEAN_WORKING_DIR "true"
 
+RUN pip install -u jenkins-webapi 
+
 CMD [ "python", "-u", "/var/lib/jenkins/slave.py" ]
+
