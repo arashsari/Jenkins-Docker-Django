@@ -2,25 +2,39 @@ version: '3.9'
 services:
     jenkins:
         container_name: jenkins
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
         ports:
             - '8080:8080'
             - '50000:50000'
         build: jenkins/master/
+        # environment:
+        #     - JAVA_ARGS="-Dhudson.security.csrf.DefaultCrumbIssuer.EXCLUDE_SESSION_ID=true"
+        networks:
+            - jenkins_net
         # image: localhost:5000/jenkins
     jenkins-agent:
-        container_name: jenkins-agent
+        # container_name: jenkins-agent
         restart: always
         privileged: true
         user: root
         expose:
             - 22
         environment:
-            # - 'JENKINS_URL=http://jenkins:8080'
-            - 'JENKINS_URL=http://127.0.0.1/8080'
+            - 'JENKINS_URL=http://jenkins:8080'
+            # - JAVA_ARGS="-Dhudson.security.csrf.DefaultCrumbIssuer.EXCLUDE_SESSION_ID=true"
+            # - 'JENKINS_URL=http://127.0.0.1:8080'
             - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCboKS3eW6IgVw1AiaOOdf5yvtZyact7uwjrDhAocVpAvculX1V+jDLSBoZQG3Em420erjEwCLYN5BaMYK7hqGKmRLWwBeqxMA4C90FgFKPKIm8Re+TYpZ/NgM5YV0Ou/bChrHVBd3z5EYKdjaYHeqFxFthe6vSkMPkLikdDbT+6OMS1GVKMewQGeVsSb6agZYgn4n693JKJCxkfYL/Bv1une13tN7yzQ8jEwzf7JoDeZwwBxmrVz1Tp9IqI6EDiV2ezGpgI4guBttMC3cHlog93aXaqY2z8gXm/oHHMuU5HRc1q2EzZgWqHG3RT57Yu/4jMcc5YoCRuxipZA1w4x1irgB2nGHjLSAefKQ9uWXJKoUmpLnhyq7in1AO2sIajfS3zvaABVHpIb5Zkx/Z3gYGlUEEsoLbHMWMrOxuv7piz7LqglXT6tg4XesSN9jKz4OqJIDo4AWK9f03hEwqTZOw6kJW7BPcNwuQDsHqI/5uIHU0SpImua+MwTZHzU84JCE= arash@mehdis-MBP
         # image: localhost:5000/build-agent
         build: jenkins/build-agent/
+        networks:
+            - jenkins_net
         volumes:
-          - /var/run/docker.sock:/var/run/docker.sock 
+            - /var/run/docker.sock:/var/run/docker.sock
+            - jenkins_data:/var/jenkins_home
         depends_on: 
-          - jenkins
+            - jenkins
+networks:
+  jenkins_net:
+volumes:
+    jenkins_data:

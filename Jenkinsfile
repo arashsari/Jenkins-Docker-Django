@@ -5,7 +5,7 @@ node('docker') {
         sh "docker build -t app:B${BUILD_NUMBER} -f Dockerfile ."
   
     stage 'Integration Test'
-        sh "docker-compose -f docker-compose.integration.yml up --force-recreate --abort-on-container-exit"
+        sh "docker-compose -f docker-compose.app.yml up --force-recreate --abort-on-container-exit"
         sh "docker-compose -f docker-compose.app.yml down -v"
 }
 
