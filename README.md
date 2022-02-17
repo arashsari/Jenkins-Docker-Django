@@ -1,7 +1,4 @@
 # Jenkins-Docker-Django
-09121777151
-
-jaber
 
 ## Instruction to run
 
